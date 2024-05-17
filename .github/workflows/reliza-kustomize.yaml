@@ -21,7 +21,7 @@ jobs:
           mv reliza-cli /tmp/reliza-cli
           rm reliza-cli-2023.09.21-linux-amd64.zip
           /tmp/reliza-cli replacetags --env TEST --indirectory ${PWD}/test --outdirectory ${PWD}/test_upd
-          mv ./test_upd ./test
+          rm -rf test && mv testupd test
           git status
           git diff
           
