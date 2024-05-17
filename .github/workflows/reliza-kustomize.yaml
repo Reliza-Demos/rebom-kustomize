@@ -10,6 +10,10 @@ jobs:
       APIKEYID: ${{ secrets.RELIZA_ORGWIDE_API_ID }}
       APIKEY: ${{ secrets.RELIZA_ORGWIDE_API_KEY }}
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
       - name: Update definitions based on Reliza Hub data
         run: |
           wget https://d7ge14utcyki8.cloudfront.net/reliza-cli-download/2023.09.21/reliza-cli-2023.09.21-linux-amd64.zip
@@ -17,7 +21,7 @@ jobs:
           mv reliza-cli /tmp/reliza-cli
           rm reliza-cli-2023.09.21-linux-amd64.zip
           /tmp/reliza-cli replacetags --env TEST --indirectory ${PWD}/test --outdirectory ${PWD}/test_upd
-          mv test_upd test
+          mv test_upd/ test/
           git status
           git diff
           
