@@ -7,8 +7,8 @@ jobs:
     name: Update Definitions based on Reliza Hub
     runs-on: ubuntu-latest
     env:
-      RELIZA_API_ID: ${{ secrets.RELIZA_ORGWIDE_API_ID }}
-      RELIZA_API_KEY: ${{ secrets.RELIZA_ORGWIDE_API_KEY }}
+      APIKEYID: ${{ secrets.RELIZA_ORGWIDE_API_ID }}
+      APIKEY: ${{ secrets.RELIZA_ORGWIDE_API_KEY }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -20,7 +20,8 @@ jobs:
           unzip reliza-cli-2023.09.21-linux-amd64.zip
           mv reliza-cli /tmp/reliza-cli
           rm reliza-cli-2023.09.21-linux-amd64.zip
-          /tmp/reliza-cli replacetags --env TEST --indirectory ${PWD}/test
+          /tmp/reliza-cli replacetags --env TEST --indirectory ${PWD}/test --outdirectory ${PWD}/test_upd
+          mv test_upd test
           git status
           git diff
           
