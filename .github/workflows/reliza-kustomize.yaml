@@ -55,7 +55,7 @@ jobs:
           reliza_project_id: a0478f20-03d0-49a2-9614-cada7f5e4ad7
       - name: Submit metadata to Reliza Hub
         uses: relizaio/reliza-add-release@1.1
-        if: ${{env.RELIZA_DO_BUILD == 'true'}}
+        if: ${{env.DO_COMMIT == 'true'}}
         with:
           reliza_api_id: ${{ secrets.RELIZA_ORGWIDE_API_ID }}
           reliza_api_key: ${{ secrets.RELIZA_ORGWIDE_API_KEY }}
