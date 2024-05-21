@@ -2,6 +2,9 @@ on: [push]
 
 name: Update images based on Reliza Hub definitions
 
+permissions:
+  contents: write
+
 jobs:
   update:
     name: Update Definitions based on Reliza Hub
