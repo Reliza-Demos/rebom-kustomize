@@ -8,4 +8,4 @@ spec:
     spec:
       containers:
       - name: rebom-frontend
-        image: registry.relizahub.com/94c8a8cd-9162-478d-aefc-de006d5af906-public/rebom-frontend@sha256:a40892095956938d320e44e4628570306144f3a6a410544cba073cbac5d92efb
+        image: registry.relizahub.com/94c8a8cd-9162-478d-aefc-de006d5af906-public/rebom-frontend
