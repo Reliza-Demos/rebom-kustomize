@@ -61,6 +61,7 @@ jobs:
           reliza_api_key: ${{ secrets.RELIZA_ORGWIDE_API_KEY }}
           image_full_name: github.com/$GITHUB_REPOSITORY
           image_digest: $(git log -1 --pretty='%H')
+          artifact_type: File
           reliza_full_version: ${{ steps.get-version.outputs.reliza_full_version }}
           reliza_build_start: ${{ steps.get-version.outputs.reliza_build_start }}
           reliza_build_status: complete
