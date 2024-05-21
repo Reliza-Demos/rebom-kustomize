@@ -24,6 +24,40 @@ jobs:
           rm -rf test && mv test_upd test
           /tmp/reliza-cli replacetags --env STAGING --indirectory ${PWD}/staging --outdirectory ${PWD}/staging_upd --provenance=false
           rm -rf staging && mv staging_upd staging
-          git status
-          git diff
-          
+      - name: Check if the change happened
+        run: |
+          lines=$(git status -s | wc -l)
+          if [ $lines -gt 0 ];then
+            echo "committing and recording release"
+            echo "DO_COMMIT=true" >> $GITHUB_ENV
+          else
+            echo "no change, nothing to commit"
+          fi
+      - name: Commit if change happened
+        if: ${{env.DO_COMMIT == 'true'}}
+        run: |
+          git config --local user.name 'reliza-auto'
+          git config --local user.email 'info@reliza.io'
+          git add .
+          git commit -m "fix: update of deployment definitions based on Reliza Hub"
+          git push
+      - id: get-version
+        name: Get Build Version
+        if: ${{env.DO_COMMIT == 'true'}}
+        uses: relizaio/reliza-get-version@1.6
+        with: 
+          reliza_api_id: ${{ secrets.RELIZA_ORGWIDE_API_ID }}
+          reliza_api_key: ${{ secrets.RELIZA_ORGWIDE_API_KEY }}
+          reliza_project_id: a0478f20-03d0-49a2-9614-cada7f5e4ad7
+      - name: Submit metadata to Reliza Hub
+        uses: relizaio/reliza-add-release@1.1
+        if: ${{env.RELIZA_DO_BUILD == 'true'}}
+        with:
+          reliza_api_id: ${{ secrets.RELIZA_ORGWIDE_API_ID }}
+          reliza_api_key: ${{ secrets.RELIZA_ORGWIDE_API_KEY }}
+          image_full_name: github.com/$GITHUB_REPOSITORY
+          image_digest: $(git log -1 --pretty='%H')
+          reliza_full_version: ${{ steps.get-version.outputs.reliza_full_version }}
+          reliza_build_start: ${{ steps.get-version.outputs.reliza_build_start }}
+          reliza_build_status: complete
+          reliza_project_id: a0478f20-03d0-49a2-9614-cada7f5e4ad7
