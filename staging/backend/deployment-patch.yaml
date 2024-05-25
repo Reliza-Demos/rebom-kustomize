@@ -13,4 +13,4 @@ spec:
       - name: rebom-backend-init
         image: registry.relizahub.com/94c8a8cd-9162-478d-aefc-de006d5af906-public/rebom-backend@sha256:a48f80c7c605f1fe4e8ef1a620ad9023d175cf22cd4b28596e204c2a1b10abb5
       - name: rebom-backend-migrations
-        image: flyway/flyway:9-alpine
+        image: docker.io/flyway/flyway@sha256:af372d52c20c4353db6b7442be57328b2f81fd32784e2af630bb0a59010ea560
